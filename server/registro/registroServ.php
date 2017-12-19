@@ -19,10 +19,7 @@
 			//header("Location:../../registro.php?MensajeEdo=".urlencode($strMensajeEdo));
 		}elseif(!validateGroupHttpParams($numComp,
 			['nombre','apMat','apPat'],
-			"/^[\wñÑáéíóúÁÉÚÍÓ ]{1,25}$/",'POST') ||
-			!validateGroupHttpParams($numComp,
-						['capitan'],
-						"/\b(true|false)$/",'POST')){
+			"/^[\wñÑáéíóúÁÉÚÍÓ ]{1,25}$/",'POST')){
 			//validamos los competidores
 			$strMensajeEdo="Hay un error en el formulario de los competidores";
 		}elseif(!validateGroupHttpParams($numRob,
@@ -38,8 +35,7 @@
 			header("Location:../../registro.php?MensajeEdo=".urlencode($strMensajeEdo));
 		}
 		//obtenemos los valores de los parametros
-		$competidores=getGroupHttpParams($numComp,['nombre','apMat','apPat','capitan'],'POST');
-		$arrayCap = $competidores['capitan'];
+		$competidores=getGroupHttpParams($numComp,['nombre','apMat','apPat'],'POST');
 		$arrayApPat = $competidores['apPat'];
 		$arrayNombres = $competidores['nombre'];
 		$arrayApMat = $competidores['apMat'];
@@ -59,7 +55,6 @@
 			$con->setArrayNombres($arrayNombres);
 			$con->setArrayApMat($arrayApMat);
 			$con->setArrayApPat($arrayApPat);
-			$con->setArrayCap($arrayCap);
 			//atributos de los robots
 			$con->setNumRob($numRob);
 			$con->setArrayNombreR($arrayNombreR);

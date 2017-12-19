@@ -162,11 +162,10 @@
 			$sqlCapitan;
 			for ($i=0; $i < $this->numComp; $i++) { 
 				$sqlArray[$i]=
-				"insert into competidor(cve_equ,appat_com,apmat_com,nom_com,cap_com)
+				"insert into competidor(cve_equ,appat_com,apmat_com,nom_com)
 				VALUES('".$cve_equ."','".mysql_real_escape_string($this->arrayApMat[$i])."','".mysql_real_escape_string($this->arrayApPat[$i])."','
 				".mysql_real_escape_string($this->arrayNombres[$i]).
-				"',".((mysql_real_escape_string($this->arrayCap[$i])=="true")?1:0).
-				")"
+				"')"
 				;
 			}
 			return $sqlArray;
@@ -214,7 +213,10 @@
 		{
 			//insertamos el equipo
 			$rs = mysql_query("
-				INSERT INTO equipo (nom_equ,mail_equ,tel_equ,pag_equ)VALUES('".mysql_real_escape_string($this->nombreEquipo)."','".mysql_real_escape_string($this->email)."','".mysql_real_escape_string($this->tel)."',0)
+				INSERT INTO equipo (nom_equ,mail_equ,tel_equ,pag_equ)VALUES('".
+					mysql_real_escape_string($this->nombreEquipo)."','"
+					.mysql_real_escape_string($this->email)."','"
+					.mysql_real_escape_string($this->tel)."',0)
 				");
 
 			if(!$rs){

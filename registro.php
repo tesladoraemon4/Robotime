@@ -1,4 +1,7 @@
 <!DOCTYPE html>
+<?php
+	include("server/Connection.class.php");
+?>
 <html lang="en" ng-app="formulario">
 <head>
 	<meta charset="UTF-8">
@@ -51,9 +54,6 @@
 				<input name="apMat{{$index+1}}" ng-model="competidor.apMat" placeholder="Apellido materno:" type="text" required maxlength="25">		
 			</label>
 			<br>
-			Capitan: <input id ="capitan{{$index+1}}" name="capitasdfg{{$index+1}}" type="checkbox" ng-click="onlyUneCap(e)" ng-model="competidor.esCapitan" value="false">
-			<input id="capitan{{$index+1}}" type="hidden" name="capitan{{$index+1}}" value="false">
-			<br><hr>
 		</div>
 		<br>
 		Numero de robots: <br>
@@ -67,10 +67,27 @@
 			</label>
 			<br>
 			Categoria: <br>
-			<select id="Categoria{{$index+1}}" name="Categoria{{$index+1}}" ng-repeat="categoria in categorias"  ng-model="robot.cat" required>
-				<option 
-				value="{{categorias[$index].nom}}">{{categoria.nom}}</option>
+			<select id="Categoria{{$index+1}}" name="Categoria{{$index+1}}" required>
+			<?php 
+				$con =new Connection();
+				if($con->hacerConeccion()){
+					$sql = 'select * from categoria;';
+					while ($array=mysql_fetch_array($rs)) {
+			?>
+					
+						<option value=<?php echo $array['nom_cat'];?>>
+							<?php echo $array['nom_cat'];?>
+						</option>
+					
+			<?php
+					}
+				}else
+				{
+					echo "No hay categorias es la BD";
+				}
+			?>
 			</select>
+
 
 			<br><hr>
 		</div>

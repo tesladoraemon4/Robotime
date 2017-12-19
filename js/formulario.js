@@ -8,24 +8,7 @@ mismos
 angular.module('formulario', []).
 controller('formRegistro', ['$scope','$log','$http',function($scope,$log,$http){
 	scope = $scope; 
-	
-	$scope.onlyUneCap = function (e) {
-		var cont=0,band=true;
-		for (var i = $scope.competidores.length - 1; i >= 0;i--){
-			if($scope.competidores[i].esCapitan)
-				cont++;
-			if(cont>1){
-				alert("solo puede haber un capitan por equipo");
-				$scope.competidores[i].esCapitan=false;
-				band=false;
-				break;
-			}
-		}
-		if(band){
-			var elementoHiden = document.getElementById('capitan'+(parseInt(e.index)+1));
-			elementoHiden.value = band;
-		}
-	}
+
 
 
 
@@ -34,10 +17,17 @@ controller('formRegistro', ['$scope','$log','$http',function($scope,$log,$http){
 
 	$scope.competidores=[{}];
 	$scope.robots=[{}];
+	
+
 	$scope.categorias=
 	[{
-		nom:'Sumo'
+		nom:'Drones'
+	},{
+		nom:'Siguelineas'
 	}];
+
+
+
 	$scope.noHayCapitan=false;
 	function concatVar() {
 		var cad="";
