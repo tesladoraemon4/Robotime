@@ -13,10 +13,11 @@ controller('formRegistro', ['$scope','$log','$http',function($scope,$log,$http){
 
 
 	$scope.numComp=1;
+	
 	$scope.numRob=1;
+	$scope.robots=[{}];
 
 	$scope.competidores=[{}];
-	$scope.robots=[{}];
 	
 
 	$scope.categorias=
@@ -76,7 +77,7 @@ controller('formRegistro', ['$scope','$log','$http',function($scope,$log,$http){
 
 
 function validar() {
-	return validarCompetidores() &&
+	return 
 	validarCategoriaRobots();
 }
 function validarCompetidores() {

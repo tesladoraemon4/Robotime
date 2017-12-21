@@ -51,10 +51,9 @@
 				<button ng-init="showCompetidores<?echo $arrayEqu['cve_equ'];?>=false" type="radio" ng-click="showCompetidores<?echo $arrayEqu['cve_equ'];?>=!showCompetidores<?echo $arrayEqu['cve_equ'];?>">Ver Competidores</button>
 
 				<?php
+					$sql = "select r.nom_rob, r.cve_rob, c.nom_cat from robot r inner join categoria c on c.cve_cat=r.cve_cat where r.cve_equ=".$arrayEqu['cve_equ'];
 					//consultamos los robots 
-					if($rs2 = mysql_query("
-						SELECT r.nom_rob, r.cve_rob, c.nom_cat FROM robot r, categoria c where r.cve_cat=r.cve_cat AND r.cve_equ=".$arrayEqu['cve_equ']."
-						")){
+					if($rs2 = mysql_query($sql)){
 						while ($robots=mysql_fetch_array($rs2)) {
 						?>
 						<div id="Robots" ng-show="showRobots<?echo $arrayEqu['cve_equ'];?>">
@@ -63,7 +62,6 @@
 							<h6>Nombre robot: <?php echo $robots['nom_rob'];?></h6>
 							<h6>Categoria robot: <?php echo $robots['nom_cat'];?></h6>
 						</div><br>
-						<hr>
 						<?php
 						}
 					}else{
@@ -71,14 +69,12 @@
 					}
 					//consultamos los comp 
 					if($rs2 = mysql_query("
-						SELECT cve_com, cap_com, apmat_com,appat_com,nom_com FROM competidor where cve_equ=".$arrayEqu['cve_equ']."
+						SELECT cve_com, apmat_com,appat_com,nom_com FROM competidor where cve_equ=".$arrayEqu['cve_equ']."
 						")){
 						while ($resComp=mysql_fetch_array($rs2)) {
 						?>
 						<div id="Competidores" ng-show="showCompetidores<?echo $arrayEqu['cve_equ'];?>">
-							<?if($resComp['cap_com']=='1'){?>
-								<h5>Es capitan</h5>
-							<?}?>
+							
 							<h6>Nombre competidor:<?php echo $resComp['appat_com']." ".$resComp['apmat_com']." ".$resComp["nom_com"];?></h6>
 						</div><br>
 						<?php

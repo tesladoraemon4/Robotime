@@ -1,0 +1,8 @@
+En carera.php
+use un div como boton solo cambiale el estilo el estilo del boton esta en carera.php
+ocupe una css para el cronometro esta en la carpeta de css
+<3
+
+
+
+

@@ -10,6 +10,13 @@
 <body>
 <? include 'server/layouts/header.php'; ?>
 	<form action="server/inicioSesion.php" method="POST" accept-charset="utf-8" onsubmit="return validarInicioSesion()">
+		para iniciar sesion como administrador<br>
+		user:admin<br>
+		pass:12345<br>
+		para iniciar sesion como juez<br>
+		user:juez<br>
+		pass:12345<br>
+
 		<label>USUARIO <br>
 			<input id="user" maxlength="25" type="text" name="user" placeholder="Usuario">
 		</label>
@@ -20,11 +27,5 @@
 		<br>
 		<input type="submit" value="Iniciar Sesion">
 	</form>
-
-
-
-
-
-
 </body>
 </html>

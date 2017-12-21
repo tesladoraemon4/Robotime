@@ -60,6 +60,11 @@
 		{{numRob}}
 		<button ng-click="sumR()">+</button>
 		<button ng-click="resR()">-</button>
+		<?php 
+			$con =new Connection();
+			if($con->hacerConeccion()){
+				$rs;
+		?>
 		<div ng-repeat="robot in robots">
 			<label>
 				Nombre del robot:<br>
@@ -68,10 +73,11 @@
 			<br>
 			Categoria: <br>
 			<select id="Categoria{{$index+1}}" name="Categoria{{$index+1}}" required>
-			<?php 
-				$con =new Connection();
-				if($con->hacerConeccion()){
+			
+
+			<?php
 					$sql = 'select * from categoria;';
+					$rs = mysql_query($sql);
 					while ($array=mysql_fetch_array($rs)) {
 			?>
 					
@@ -81,16 +87,19 @@
 					
 			<?php
 					}
-				}else
-				{
-					echo "No hay categorias es la BD";
-				}
 			?>
+			
 			</select>
 
 
 			<br><hr>
 		</div>
+		<?php
+			}else
+			{
+				echo "No hay categorias es la BD";
+			}
+		?>
 		<br>
 		<br>
 		<hr>

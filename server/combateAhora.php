@@ -49,12 +49,5 @@ if(!isset($_SESSION['key']) && !isset($_GET['num'])){
 	}
 }
 ?>
-
-
-
-
-
-
-	
 </body>
 </html>

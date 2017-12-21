@@ -267,16 +267,60 @@
 			}
 		}
 
-		public function terminarRegistros(){
-			$sql ="SELECT cve_rob from robot where cve_cat=1";
+		public function terminarRegistrosDronesSiguelineas(){
+			$sql ="SELECT cve_rob from robot";
 			if(($rs = mysql_query($sql))!=false){
-				$hojas = mysql_num_rows($rs);
-				$sql = $this->prepareSqlPelea($rs);
+				$sql = $this->prepareSqlRanking($rs);
 				return $this->insertarArraySql([$sql]);
 			}else{
 				echo "Ocurrio un error haciendo una consulta ".mysql_error();
 			}
 		}
+		//preparamos los datos para vaciarlos a las tablas de 
+		//retorna una cadena que es una sentencia sql
+		public function prepareSqlRanking(&$rs){
+			//insertar en nivel 0
+			$sql = "
+				INSERT INTO ranking
+				(cve_rob) VALUES
+			";
+			while ($array=mysql_fetch_array($rs)) {
+				$sql=$sql."(".$array['cve_rob']."),";
+			}
+			//quitamos la ultima coma 
+			$sql[strlen($sql)-1]='';
+			return $sql;
+		}
+
+
+		public function terminarRegistros(){
+			$sql ="SELECT cve_rob from robot where cve_cat=1 and cve_cat=2";
+			if(($rs = mysql_query($sql))!=false){
+				$hojas = mysql_num_rows($rs);
+				$sql = $this->prepareSqlPelea($rs);
+
+				return $this->insertarArraySql([$sql]);
+			}else{
+				echo "Ocurrio un error haciendo una consulta ".mysql_error();
+			}
+
+		}
+		
+		//hace una consulta y determina si ya finalizo el periodo de registro
+		//
+		public function yaFinalizoPeriodoRegistro(){
+			$sql = "SELECT cve_rob from ranking";
+			$rs;
+			if($rs=mysql_query($sql)){
+				return mysql_num_rows($rs)>0;
+			}else{
+				echo "Ocurrio un error en la consulta";
+				return NULL;
+			}
+		}
+
+
+
 		//preparamos el sql para insertar los robots 
 		//return arraySql
 		public function prepareSqlPelea(&$rs){
@@ -461,11 +505,27 @@
 					echo $str;
 				}
 			}
-			
-			
 		}
 
 
+
+		//actualiza el estado del ranking 
+		//en el campo paso_ran
+		//1 cuando ya paso
+		//0 cuando no ha pasado 
+		//null cuando esta pasando a competir
+		public function actualizaRanking($cve_rob,$pun_ran,$time_ran,$paso_ran,$pena_ran)
+		{
+			$sql ="
+			update ranking set paso_ran=".
+			mysql_real_escape_string($paso_ran).",".
+			"pun_ran=".mysql_real_escape_string($pun_ran).",".
+			"time_ran='".mysql_real_escape_string(str_replace(" ", "", $time_ran))."',".
+			"pena_ran=".mysql_real_escape_string($pena_ran).
+			" where cve_rob=".mysql_real_escape_string($cve_rob)."
+			";
+			return mysql_query($sql);
+		}
 	}
 	
 ?>

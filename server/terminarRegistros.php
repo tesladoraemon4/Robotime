@@ -4,13 +4,13 @@
 	$con = new Connection();
 	if($con->hacerConeccion()){
 		$strMen="";
-		if($con->terminarRegistros())
+		if($con->terminarRegistrosDronesSiguelineas())
 		{
 			$strMen = "Se termino el periodo de registro satisfactoriamente";
 		}else{
 			$strMen="Ocurrio un error cuando se generaban las tablas de la competencia (contacte con el admin del sistema)";
 		}
-		header("Location:configPag.php?MensajeEdo=".urlencode($strMen));
+		header("Location:inicioSesionAdmin.php?MensajeEdo=".urlencode($strMen));
 	}else{
 		print("Ocurrio un error al hacer la coneccion =(");
 	}
